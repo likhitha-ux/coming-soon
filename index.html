@@ -5,120 +5,321 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Vignan University Digital Library</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body, html {
-      font-family: 'Segoe UI', sans-serif;
-      scroll-behavior: smooth;
-      background-color: #f9f9f9;
-      color: #333;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { font-family: 'Segoe UI', sans-serif; scroll-behavior: smooth; }
 
+    .hidden { display: none; }
+
+    /* Gradient Navbar */
     nav {
       background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
       color: white;
-      padding: 15px 25px;
+      padding: 12px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 10;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-
-    .nav-left h2 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
+    .nav-left h2 { margin: 0; font-size: 1.5rem; }
     .nav-right a {
+      margin-left: 20px;
       color: white;
       font-weight: bold;
-      margin-left: 20px;
-      cursor: default;
+      cursor: pointer;
+    }
+    .nav-right a:hover {
+      text-decoration: underline;
     }
 
     header {
       background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
-      height: 90vh;
+      height: 80vh;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
       color: white;
       text-align: center;
     }
-
     header::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+    .hero p { font-size: 1.2rem; margin-bottom: 1.2rem; }
+
+    .btn {
+      background: #ff6600;
+      padding: 12px 28px;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 8px;
+    }
+    .btn:hover { background: #cc5200; }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #f8f8f8;
+      padding: 40px 20px;
+    }
+    .stat {
+      flex: 1 1 200px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat h2 { font-size: 2.5rem; color: #333; }
+    .stat p { font-size: 1rem; color: #555; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform .3s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 20px;
+    }
+    .card-content h3 {
+      margin-bottom: 8px;
+      color: #222;
     }
 
-    .coming-soon {
+    .video-section {
+      padding: 40px 20px;
+      background: #f1f1f1;
+      text-align: center;
+    }
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* E-Book Gallery */
+    .ebook-banner {
+      background: url('https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+      position: relative;
+    }
+    .ebook-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+    .ebook-banner h2 {
+      position: relative;
+      font-size: 2.5rem;
+      z-index: 1;
+    }
+    .ebook-gallery {
+      padding: 40px 20px;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .gallery-item {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .gallery-item p {
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    /* About Section */
+    #about {
+      background: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+    }
+    #about::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+    }
+    #about .about-content {
       position: relative;
       z-index: 1;
       max-width: 800px;
-      padding: 20px;
+      margin: auto;
     }
-
-    .coming-soon h1 {
-      font-size: 3.5rem;
+    #about h2 {
+      font-size: 2.5rem;
       margin-bottom: 20px;
     }
-
-    .coming-soon p {
-      font-size: 1.3rem;
-      color: #ddd;
+    #about p {
+      font-size: 1.1rem;
+      line-height: 1.6;
     }
 
     footer {
-      background-color: #222;
-      color: #aaa;
+      background: #222;
+      color: #ccc;
       text-align: center;
       padding: 20px;
     }
-
-    footer a {
-      color: #ffa500;
-      margin: 0 8px;
-      text-decoration: none;
-    }
+    footer a { color: #ffa500; margin: 0 8px; }
 
     @media (max-width: 600px) {
-      .coming-soon h1 {
-        font-size: 2rem;
-      }
-
-      .coming-soon p {
-        font-size: 1rem;
-      }
+      .hero h1 { font-size: 2rem; }
+      .stats { flex-direction: column; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <nav>
     <div class="nav-left"><h2>Vignan Library</h2></div>
     <div class="nav-right">
-      <a>Home</a>
-      <a>About</a>
-      <a>Login</a>
+      <a onclick="showHome()">Home</a>
+      <a href="#about">About</a>
+      <a href="#login">Login</a>
     </div>
   </nav>
 
-  <header>
-    <div class="coming-soon">
-      <h1>Coming Soon</h1>
-      <p>Our digital library is being updated. Stay tuned for something amazing!</p>
-    </div>
-  </header>
+  <!-- Main Page -->
+  <div id="mainPage">
+    <header>
+      <div class="hero">
+        <h1>Welcome to Vignan University Digital Library</h1>
+        <p>Access knowledge anytime, anywhere – eBooks, research, and video lectures.</p>
+        <a href="#features" class="btn">Explore Resources</a>
+      </div>
+    </header>
 
+    <section class="stats">
+      <div class="stat"><h2>50K+</h2><p>E‑Books</p></div>
+      <div class="stat"><h2>30K+</h2><p>Research Papers</p></div>
+      <div class="stat"><h2>10K+</h2><p>Video Lectures</p></div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="card" onclick="showEbooks()">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80" alt="E‑Books">
+        <div class="card-content">
+          <h3>E‑Books & Journals</h3>
+          <p>Access a wide variety of digital books and academic journals online.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=400&q=80" alt="Research Papers">
+        <div class="card-content">
+          <h3>Research Papers</h3>
+          <p>Explore the latest research and theses contributed by top scholars.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://cdn.prod.website-files.com/65e89895c5a4b8d764c0d70e/671f5d9531cc552d2aa3f4de_b8406cb4-5bea-4c23-a047-2e245afa50a0.jpeg" alt="Video Lectures">
+        <div class="card-content">
+          <h3>Video Lectures</h3>
+          <p>Learn visually with expert-led recorded sessions and webinars.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="video-section">
+      <h2>Watch Our Cloud Computing Lectures</h2>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/EN4fEbcFZ_E" title="Cloud Computing Lecture" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about-content">
+        <h2>About Our Library</h2>
+        <p>
+          Vignan University's Digital Library offers a rich collection of eBooks, journals, research materials, and video content that fosters learning and innovation. Students and faculty can access materials anytime, anywhere to enhance their academic journey.
+        </p>
+      </div>
+    </section>
+
+    <div id="login" style="padding:40px; text-align:center;">
+      <h2>Login (Coming Soon)</h2>
+    </div>
+  </div>
+
+  <!-- E-Books Gallery Page -->
+  <div id="ebookPage" class="hidden">
+    <section class="ebook-banner">
+      <h2>Explore Our Premium Range of eBooks</h2>
+    </section>
+    <section class="ebook-gallery">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="https://covers.openlibrary.org/b/id/10523389-L.jpg" alt="Computer Networks">
+          <p>Computer Networks<br><small>Andrew S. Tanenbaum</small></p>
+        </div>
+        <div class="gallery-item">
+          <img src="https://covers.openlibrary.org/b/id/9872984-L.jpg" alt="AI Book">
+          <p>Artificial Intelligence<br><small>Stuart Russell</small></p>
+        </div>
+        <div class="gallery-item">
+          <img src="https://covers.openlibrary.org/b/id/8271996-L.jpg" alt="DBMS">
+          <p>Database System Concepts<br><small>Abraham Silberschatz</small></p>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top: 30px;">
+        <button class="btn" onclick="showHome()">Back to Home</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Vignan University. All rights reserved.</p>
     <p>
@@ -128,5 +329,19 @@
     </p>
   </footer>
 
+  <!-- JavaScript -->
+  <script>
+    function showEbooks() {
+      document.getElementById('mainPage').classList.add('hidden');
+      document.getElementById('ebookPage').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    function showHome() {
+      document.getElementById('ebookPage').classList.add('hidden');
+      document.getElementById('mainPage').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+  </script>
 </body>
 </html>
